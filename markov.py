@@ -49,65 +49,95 @@ def make_chains(text_string):
     # for lines in text_string:
         # lines=lines.split("\n")
     text_list = text_string.split()
-    print(text_list)
 
-    # print(lines)
-    for i in range(len(text_list)-2):
+    tuple_list= []
+    for i, word in enumerate(text_list[:-1]):
         words_tuple = (text_list[i],text_list[i+1])
-        chains[words_tuple]=[]
+        tuple_list.append(words_tuple)
 
-    idx=0
-    keys_list = list(chains.keys())
-    keys_list.sort()
-    for k,v in keys_list:
-        print(k,v,s)
-        if k == keys_list:
-            chains[k].append(keys_list[idx+1][1])
-        idx += 1    
-    print(keys_list)
+    for idx, k in enumerate(tuple_list[:-1]):
+        next_word = tuple_list[idx+1][1]
+        values = chains.setdefault(k,[])
+        values.append(next_word)
+    # print(chains)
+    #     if k == keys_list[idx]:
+    #         chains[k].append(keys_list[idx+1][0])
+    #     idx += 1    
+    # print(keys_list)
   
 
-    print(len(chains))
-    print(chains)
-
-        # d.setdefault(k, [])
-    #             # chains[words_tuple]= word.append(words[i+2])
-    #     # for i in range(len(chains)-2):
-    #     #     if words_tuple in chains[words_tuple]:
-    #     #         chains[words_tuple] = word.append(words[i+2])
-    #             # while word in chains[words_tuple]:
-    #             #     word.append(words[i+2])
-    #             if words_tuple in chains:
-    #                 chains[words_tuple].append(words[i+2])
-
-    #             else:
-    #                 chains[words_tuple] = [words]
-    
-
+    # print(len(chains))
     # print(chains)
-    # return chains
-#     return chains
-make_chains(new_string)
+    their_answer = {('a', 'fox?'): ['Would'],
+ ('Sam', 'I'): ['am?'],
+ ('could', 'you'): ['in', 'with', 'in', 'with'],
+ ('you', 'with'): ['a', 'a'],
+ ('box?', 'Would'): ['you'],
+ ('ham?', 'Would'): ['you'],
+ ('you', 'in'): ['a', 'a'],
+ ('a', 'house?'): ['Would'],
+ ('like', 'green'): ['eggs'],
+ ('like', 'them,'): ['Sam'],
+ ('and', 'ham?'): ['Would'],
+ ('Would', 'you'): ['could', 'could', 'could', 'could', 'like', 'like'],
+ ('you', 'could'): ['you', 'you', 'you', 'you'],
+ ('a', 'mouse?'): ['Would'],
+ ('them,', 'Sam'): ['I'],
+ ('in', 'a'): ['house?', 'box?'],
+ ('with', 'a'): ['mouse?', 'fox?'],
+ ('house?', 'Would'): ['you'],
+ ('a', 'box?'): ['Would'],
+ ('green', 'eggs'): ['and'],
+ ('you', 'like'): ['green', 'them,'],
+ ('mouse?', 'Would'): ['you'],
+ ('fox?', 'Would'): ['you'],
+ ('eggs', 'and'): ['ham?']
+}
+    # if chains == their_answer:
+    #     print(True)
+    # else:
+    #     print(False)
 
-# def make_text(chains):
-#     """Return text from chains."""
-
-#     words = []
-
-#     # your code goes here
-
-#     return " ".join(words)
+    return chains
 
 
-# input_path = "green-eggs.txt"
+# make_chains(new_string)
 
-# # Open the file and turn it into one long string
-# input_text = open_and_read_file(input_path)
+def make_text(chains):
+    """Return text from chains."""
+    chains_keys = list(chains.keys())
+    
+    words = []
 
-# # Get a Markov chain
-# chains = make_chains(input_text)
+    random_keys = choice(chains_keys)
+    phrase_list = chains[random_keys] 
+    random_word = choice(phrase_list)
 
-# # Produce random text
-# random_text = make_text(chains)
+    words = [random_word]
+
+    random_keys = (random_keys[1], random_word)
+
+    while random_keys != chains['Sam','I']:
+        words.append(random_keys)
+        words.append(random_word)
+
+
+    print(words)
+
+    # your code goes here
+
+    # return " ".join(words)
+
+
+input_path = "green-eggs.txt"
+
+# Open the file and turn it into one long string
+input_text = open_and_read_file(input_path)
+
+# Get a Markov chain
+chains = make_chains(input_text)
+
+# Produce random text
+random_text = make_text(chains)
 
 # print(random_text)
